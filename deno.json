@@ -1,9 +1,11 @@
 {
   "imports": {
+    "@discordeno/bot": "npm:@discordeno/bot@^21.0.0",
+    "discordeno": "npm:discordeno@^21.0.0",
     "hono": "jsr:@hono/hono@^4.13.5"
   },
   "tasks": {
-    "start": "deno run --watch-hmr --allow-net --allow-read src/main.ts"
+    "start": "deno run --watch-hmr --allow-net --allow-read --env-file --allow-env src/main.ts"
   },
   "compilerOptions": {
     "jsx": "precompile",

@@ -1,10 +1,13 @@
+import { sendStatusNotif } from "../discord/interval/sendStatusChangeMessage.ts";
 import { Status } from "../helper/enum.ts";
 
 export let overallStatus: Status = Status.UNKNOWN
 
+let previousHomeStatus: Status = Status.UNKNOWN
 export let homeStatus: Status = Status.UNKNOWN;
 export const homeIsUpUrl: URL = new URL("https://studio.furrymod.tutel.page/is_up");
 
+let previousEditorStatus: Status = Status.UNKNOWN
 export let editorStatus: Status = Status.UNKNOWN;
 export const editorIsUpUrl: URL = new URL("https://studio.furrymod.tutel.page/is_up");
 // TODO: The rest of the services, currently we only host Editor and Home
@@ -32,24 +35,38 @@ async function checkStates(homeUrl: URL, editorUrl: URL): Promise<Status> {
         console.warn("[STATUS] Editor detected as DOWN");
     }
 
+    let newOverallStatus: Status;
+
     if (homeOk && editorOk) {
-        console.log("[STATUS] Status is currently: OPERATIONAL");
-        return Status.OPERATIONAL;
+        newOverallStatus = Status.OPERATIONAL;
     } else if (!homeOk && !editorOk) {
-        console.log("[STATUS] Status is currently: DOWN");
-        return Status.DOWN;
+        newOverallStatus = Status.DOWN;
     } else {
-        console.log("[STATUS] Status is currently: DEGRADED");
-        return Status.DEGRADED;
+        newOverallStatus = Status.DEGRADED;
     }
+
+    console.log(`[STATUS] Overall status is currently: ${newOverallStatus}`);
+
+    // Kinda stupid but oh well what you gonna do, skin me?
+    if (previousHomeStatus!==Status.UNKNOWN && previousHomeStatus!==homeStatus) {
+        await sendStatusNotif("Home", homeStatus, Deno.env.get("DISCORD_STATUS_CHANNEL_ID")!)
+    }
+
+    if (previousEditorStatus!==Status.UNKNOWN && previousEditorStatus!==editorStatus) {
+        await sendStatusNotif("Editor", editorStatus, Deno.env.get("DISCORD_STATUS_CHANNEL_ID")!)
+    }
+
+    previousEditorStatus = editorStatus;
+    previousHomeStatus = homeStatus;
+
+    return newOverallStatus;
 }
 
 
 export async function beginCheckingStates() {
-    // Don't wanna sit for 5 minutes on UNKNOWN
     overallStatus = await checkStates(homeIsUpUrl, editorIsUpUrl);
 
     setInterval(async () => {
         overallStatus = await checkStates(homeIsUpUrl, editorIsUpUrl);
-    }, 5 * 60 * 1000);
+    }, 1 * 60 * 1000);
 }

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { editorStatus, homeStatus, overallStatus } from "../../../interval/getCurrentStatus.ts";
+import { overallStatus, homeStatus, editorStatus } from "../../../../interval/getCurrentStatus.ts";
 
 const app = new Hono()
 
