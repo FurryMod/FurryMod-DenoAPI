@@ -1,6 +1,6 @@
 export enum Status {
-    OPERATIONAL = 100,
-    DEGRADED = 50,
-    DOWN = 0,
-    UNKNOWN = -1,
+    OPERATIONAL = "OPERATIONAL",
+    DEGRADED = "DEGRADED",
+    DOWN = "DOWN",
+    UNKNOWN = "UNKNOWN",
 }
