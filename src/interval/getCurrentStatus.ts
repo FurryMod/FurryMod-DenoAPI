@@ -1,4 +1,4 @@
-import { Status } from "../helper/enums.ts";
+import { Status } from "../helper/enum.ts";
 
 export let overallStatus: Status = Status.UNKNOWN
 
