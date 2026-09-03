@@ -44,9 +44,12 @@ async function checkStates(homeUrl: URL, editorUrl: URL): Promise<Status> {
     }
 }
 
-// Don't wanna sit for 5 minutes on UNKNOWN
-overallStatus = await checkStates(homeIsUpUrl, editorIsUpUrl);
 
-setInterval(async () => {
+export async function beginCheckingStates() {
+    // Don't wanna sit for 5 minutes on UNKNOWN
     overallStatus = await checkStates(homeIsUpUrl, editorIsUpUrl);
-}, 5 * 60 * 1000);
+
+    setInterval(async () => {
+        overallStatus = await checkStates(homeIsUpUrl, editorIsUpUrl);
+    }, 5 * 60 * 1000);
+}

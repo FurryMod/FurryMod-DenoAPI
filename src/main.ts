@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { beginCheckingStates } from "./interval/getCurrentStatus.ts";
 
 const app = new Hono()
 
@@ -19,6 +20,8 @@ async function loadEndpoints(app: Hono, dir: URL, base = '') {
     app.route(`${base}/${name}`, mod.default)
   }
 }
+
+await beginCheckingStates()
 
 await loadEndpoints(app, new URL("./api/", import.meta.url))
 
