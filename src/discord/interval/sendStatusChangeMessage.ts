@@ -5,6 +5,7 @@ function getStatusEmbed(serviceName: string, status: Status) {
     switch (status) {
         case Status.OPERATIONAL:
             return {
+                content: `<@&1545134054612017273>`,
                 embeds: [
                     {
                         title: "A service is now up.",
@@ -19,6 +20,7 @@ function getStatusEmbed(serviceName: string, status: Status) {
 
         case Status.DEGRADED:
             return {
+            content: `<@&1545134054612017273>`,
             embeds: [
                 {
                     title: "A service has degraded availability.",
@@ -33,6 +35,7 @@ function getStatusEmbed(serviceName: string, status: Status) {
 
         case Status.DOWN:
             return {
+                content: `<@&1545134054612017273>`,
                 embeds: [
                     {
                         title: "A service has gone down.",
