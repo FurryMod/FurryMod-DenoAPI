@@ -1,6 +1,6 @@
 import {
   ApplicationCommandTypes,
-  CreateApplicationCommand
+  CreateApplicationCommand,
 } from "@discordeno/bot";
 import { bot } from "../bot.ts";
 
@@ -15,7 +15,11 @@ await bot.rest.createGuildApplicationCommand(
 );
 
 export async function doPublish(interaction) {
-  console.log(interaction.data?.targetId)
+  const permissions = interaction.member?.permissions;
 
-  await interaction.respond("Hello, world! You tried to publish a message, but this isn't implemented yet...")
+  if (!permissions.has("MANAGE_MESSAGES")) {
+    await interaction.respond("You need the permission Manage Messages to perform this action.",{isPrivate: true})
+  }
+
+  await interaction.respond("Hello, world! You tried to publish a message, but this isn't implemented yet...",{isPrivate: true})
 }

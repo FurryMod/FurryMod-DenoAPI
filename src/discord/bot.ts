@@ -16,6 +16,10 @@ export const bot = createBot({
       type: true,
       data: true,
       token: true,
+      member: true,
     },
+    member: {
+      permissions: true,
+    }
   },
 });
