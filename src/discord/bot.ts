@@ -1,25 +1,25 @@
 import { createBot, Intents } from "@discordeno/bot";
 
 export const bot = createBot({
-  token: Deno.env.get("DISCORD_TOKEN")!,
-  intents: Intents.Guilds | Intents.GuildMessages | Intents.MessageContent,
-  desiredProperties: {
-    user: {
-      id: true,
-      username: true,
-    },
-    channel: {
-      name: true,
-    },
-    interaction: {
-      id: true,
-      type: true,
-      data: true,
-      token: true,
-      member: true,
-    },
-    member: {
-      permissions: true,
-    }
-  },
+	token: Deno.env.get("DISCORD_TOKEN")!,
+	intents: Intents.Guilds | Intents.GuildMessages | Intents.MessageContent,
+	desiredProperties: {
+		user: {
+			id: true,
+			username: true,
+		},
+		channel: {
+			name: true,
+		},
+		interaction: {
+			id: true,
+			type: true,
+			data: true,
+			token: true,
+			member: true,
+		},
+		member: {
+			permissions: true,
+		}
+	},
 });
